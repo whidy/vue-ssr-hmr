@@ -1,6 +1,6 @@
 const path = require('path');
-
-const express = require('express');
+const Koa = require('koa');
+const Router = require('koa-router');
 
 const { createBundleRenderer } = require('vue-server-renderer');
 
@@ -12,8 +12,8 @@ const template = require('fs').readFileSync(
 const serverBundle = require('../dist/vue-ssr-server-bundle.json');
 const clientManifest = require('../dist/vue-ssr-client-manifest.json');
 
-const server = express();
-
+const app = new Koa();
+const router = new Router();
 const renderer = createBundleRenderer(serverBundle, {
   runInNewContext: false,
   template,
@@ -21,23 +21,13 @@ const renderer = createBundleRenderer(serverBundle, {
   inject: false,
 });
 
-server.use('/dist', express.static(path.join(__dirname, '../dist')));
+app.use(require('koa-static')(path.join(__dirname, '../dist')));
 
-server.get('*', (req, res) => {
-  const context = { url: req.url };
-
-  renderer.renderToString(context, (err, html) => {
-    if (err) {
-      if (+err.message === 404) {
-        res.status(404).end('Page not found');
-      } else {
-        console.log(err);
-        res.status(500).end('Internal Server Error');
-      }
-    }
-
-    res.end(html);
-  });
+router.get('*', async (ctx, next) => {
+  const context = { url: ctx.url };
+  const html = await renderer.renderToString(context);
+  ctx.body = html;
 });
+app.use(router.routes()).use(router.allowedMethods());
 
-server.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000);
