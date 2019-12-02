@@ -32,22 +32,22 @@ import { mapState } from 'vuex'
 import {
   MAIN__ITEM_ADD,
   MAIN__ITEM_ADD_ASYNC,
-  MAIN__ITEM_DELELE
+  MAIN__ITEM_DELELE,
 } from '../store/const/main'
 
 export default {
   metaInfo: {
-    title: 'Main page'
+    title: 'Main page',
   },
   data() {
     return {
-      title: 'Default title'
+      title: 'Default title',
     }
   },
   computed: {
     ...mapState({
-      items: state => state.main.items
-    })
+      items: state => state.main.items,
+    }),
   },
 
   mounted: () => {
@@ -62,7 +62,7 @@ export default {
     addAsyncItem() {
       const item = {
         id: Math.floor(Math.random() * 100),
-        title: this.$data.title
+        title: this.$data.title,
       }
 
       this.$store.dispatch(MAIN__ITEM_ADD_ASYNC, { item })
@@ -70,7 +70,7 @@ export default {
     addItem() {
       const item = {
         id: Math.floor(Math.random() * 100),
-        title: this.$data.title
+        title: this.$data.title,
       }
 
       return this.$store.commit(MAIN__ITEM_ADD, { item })
@@ -81,8 +81,8 @@ export default {
     onRemoveItem(e) {
       const id = +e.target.getAttribute('data-id')
       return this.$store.commit(MAIN__ITEM_DELELE, { id })
-    }
-  }
+    },
+  },
 }
 </script>
 

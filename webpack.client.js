@@ -1,12 +1,12 @@
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const path = require('path');
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const path = require('path')
 
-const baseConfig = require('./webpack.base.js');
+const baseConfig = require('./webpack.base.js')
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production'
 
 let config = merge(baseConfig, {
   entry: ['./app/entry-client.js'],
@@ -34,7 +34,7 @@ let config = merge(baseConfig, {
       },
     ],
   },
-});
+})
 
 if (!isProduction) {
   config = merge(config, {
@@ -56,7 +56,7 @@ if (!isProduction) {
         'Access-Control-Allow-Origin': '*',
       },
     },
-  });
+  })
 } else {
   config = merge(config, {
     plugins: [
@@ -64,7 +64,7 @@ if (!isProduction) {
         filename: '[name].[hash:8].css',
       }),
     ],
-  });
+  })
 }
 
-module.exports = config;
+module.exports = config

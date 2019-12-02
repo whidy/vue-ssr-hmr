@@ -1,11 +1,11 @@
-const webpack = require('webpack');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const merge = require('webpack-merge');
+const webpack = require('webpack')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const merge = require('webpack-merge')
 
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production'
 
 let config = {
   mode: isProduction ? 'production' : 'development',
@@ -21,7 +21,7 @@ let config = {
         exclude: file => /node_modules/.test(file) && !/\.vue\.js/.test(file),
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)(\?.*)?$/,
         use: {
           loader: 'url-loader',
           options: {
@@ -38,14 +38,14 @@ let config = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
   ],
-};
+}
 
 if (isProduction) {
   config = merge(config, {
     optimization: {
       minimizer: [new OptimizeCSSAssetsPlugin(), new UglifyJsPlugin()],
     },
-  });
+  })
 }
 
-module.exports = config;
+module.exports = config

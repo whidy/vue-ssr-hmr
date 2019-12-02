@@ -2,7 +2,7 @@ import {
   MAIN__ITEM_DELELE,
   MAIN__ITEM_ADD,
   MAIN__ITEM_ADD_ASYNC,
-} from '../const/main';
+} from '../const/main'
 
 export default {
   state: {
@@ -23,20 +23,20 @@ export default {
   },
   mutations: {
     [MAIN__ITEM_DELELE](state, { id }) {
-      state.items = state.items.filter(item => item.id !== id);
+      state.items = state.items.filter(item => item.id !== id)
     },
     [MAIN__ITEM_ADD](state, { item }) {
-      const items = [...state.items];
-      items.push(item);
+      const items = [...state.items]
+      items.push(item)
 
-      state.items = items;
+      state.items = items
     },
   },
   actions: {
     [MAIN__ITEM_ADD_ASYNC]({ commit }, { item }) {
       setTimeout(() => {
-        commit(MAIN__ITEM_ADD, { item });
-      }, 1000);
+        commit(MAIN__ITEM_ADD, { item })
+      }, 1000)
     },
   },
-};
+}

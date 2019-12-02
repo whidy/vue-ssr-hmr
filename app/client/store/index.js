@@ -1,11 +1,11 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-import main from './modules/main';
+import main from './modules/main'
 
-import config from '../../config';
+import config from '../../config'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export function createStore() {
   return new Vuex.Store({
@@ -14,5 +14,5 @@ export function createStore() {
     modules: {
       main,
     },
-  });
+  })
 }

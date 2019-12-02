@@ -1,6 +1,8 @@
 <template>
   <div>
     <h1>About</h1>
+    <el-button>默认按钮</el-button>
+
     <div>
       It is boilerplate of VueJS application. It includes:
       <ul>
@@ -22,5 +24,5 @@ export default {
   metaInfo: {
     title: 'About page',
   },
-};
+}
 </script>
