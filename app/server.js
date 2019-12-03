@@ -2,7 +2,7 @@ const path = require('path')
 const LRU = require('lru-cache')
 const Koa = require('koa')
 const Router = require('koa-router')
-
+const serve = require('koa-static')
 const { createBundleRenderer } = require('vue-server-renderer')
 
 const template = require('fs').readFileSync(
@@ -10,8 +10,8 @@ const template = require('fs').readFileSync(
   'utf-8',
 )
 
-const serverBundle = require('../dist/vue-ssr-server-bundle.json')
-const clientManifest = require('../dist/vue-ssr-client-manifest.json')
+const serverBundle = require('../public/dist/vue-ssr-server-bundle.json')
+const clientManifest = require('../public/dist/vue-ssr-client-manifest.json')
 
 const app = new Koa()
 const router = new Router()
@@ -27,7 +27,7 @@ const renderer = createBundleRenderer(serverBundle, {
   }),
 })
 
-app.use(require('koa-static')(path.join(__dirname, '../dist')))
+app.use(serve(path.resolve(__dirname, '../public')))
 
 router.get('*', async(ctx, next) => {
   const context = { url: ctx.url }

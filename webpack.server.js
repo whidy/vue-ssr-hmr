@@ -1,3 +1,4 @@
+const path = require('path')
 const merge = require('webpack-merge')
 const nodeExternals = require('webpack-node-externals')
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
@@ -8,6 +9,7 @@ module.exports = merge(baseConfig, {
   target: 'node',
   devtool: 'source-map',
   output: {
+    path: path.resolve('./public/dist/'),
     libraryTarget: 'commonjs2',
   },
   externals: nodeExternals({
@@ -17,7 +19,7 @@ module.exports = merge(baseConfig, {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.(sa|sc|c)ss$/,
         loader: 'css-loader',
         options: {
           modules: {

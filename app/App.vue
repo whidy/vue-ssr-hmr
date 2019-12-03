@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div :class="$style.links">
-      <router-link to="/" :class="$style.link">Main</router-link>
-      <router-link to="/about" :class="$style.link">About</router-link>
+    <div class="nav">
+      <router-link to="/">Main</router-link>
+      <router-link to="/about">About</router-link>
     </div>
     <router-view />
   </div>
@@ -12,26 +12,18 @@ import Vue from 'vue'
 import { Button, Select } from 'element-ui'
 
 Vue.component(Button.name, Button)
-export default {
-
-}
+export default {}
 </script>
 
-<style module>
-.link {
-  border: 1px solid rgba(65, 86, 255, 0.79);
-  padding: 8px;
-  color: #394fcc;
-  text-decoration: none;
-}
-
-.links {
-  margin: 16px 0 56px;
+<style lang="scss" scoped>
+.nav {
+  a {
+    color: red;
+  }
 }
 </style>
-
 <style>
-  body {
-    font-family: Arial, sans-serif;
-  }
+body {
+  font-family: Arial, sans-serif;
+}
 </style>

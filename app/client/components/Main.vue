@@ -3,8 +3,7 @@
     <h1>Shopping list</h1>
     <div
       v-for="item in items"
-      :key="item.id"
-      :class="$style.item">
+      :key="item.id">
       <span>{{ item.title }}</span>
       <span>
         <button
@@ -13,7 +12,7 @@
       </span>
     </div>
 
-    <div :class="$style.controls">
+    <div>
       <input
         @value="title"
         @input="onChangeTitle">
@@ -86,12 +85,8 @@ export default {
 }
 </script>
 
-<style module>
-.item {
-  padding: 3px 0;
-}
-
-.controls {
-  margin-top: 12px;
+<style lang="scss" scoped>
+h1 {
+  color: blue;
 }
 </style>

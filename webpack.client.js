@@ -12,24 +12,18 @@ let config = merge(baseConfig, {
   entry: ['./app/entry-client.js'],
   plugins: [new VueSSRClientPlugin()],
   output: {
-    path: path.resolve('./dist/'),
+    path: path.resolve('./public/dist/'),
     filename: '[name].[hash:8].js',
     publicPath: '/dist/',
   },
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
-          isProduction ? MiniCssExtractPlugin.loader : 'vue-style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: {
-                localIdentName: '[local]_[hash:base64:8]',
-              },
-            },
-          },
+          isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+          'css-loader',
+          'sass-loader',
         ],
       },
     ],
