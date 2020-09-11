@@ -1,32 +1,52 @@
 import { createApp } from './app'
 
-export default context =>
-  new Promise((resolve, reject) => {  // eslint-disable-line
-    const { app, router, store } = createApp()
-    const meta = app.$meta()
+const isDev = process.env.NODE_ENV !== 'production'
 
-    // set server-side router's location
-    router.push(context.url)
-    context.meta = meta
+export default context => new Promise((resolve, reject) => {
+  const s = isDev && Date.now()
+  const { app, router, store } = createApp()
 
-    // wait until router has resolved possible async components and hooks
-    router.onReady(() => {
-      context.rendered = () => {
-        // After the app is rendered, our store is now
-        // filled with the state from our components.
-        // When we attach the state to the context, and the `template` option
-        // is used for the renderer, the state will automatically be
-        // serialized and injected into the HTML as `window.__INITIAL_STATE__`.
-        context.state = store.state
-      }
+  const { url } = context
+  const { fullPath } = router.resolve(url).route
 
-      const matchedComponents = router.getMatchedComponents()
-      // no matched routes, reject with 404
-      if (!matchedComponents.length) {
-        return reject(new Error(404))
-      }
+  // if (fullPath !== url) {
+  //   return reject({ url: fullPath })
+  // }
+  const meta = app.$meta()
 
-      // the Promise should resolve to the app instance so it can be rendered
-      return resolve(app)
-    }, reject)
-  })
+  // set server-side router's location
+  router.push(url)
+  context.meta = meta
+
+  // wait until router has resolved possible async components and hooks
+  router.onReady(() => {
+    const matchedComponents = router.getMatchedComponents()
+    if (!matchedComponents.length) {
+      return reject(new Error(404))
+    }
+
+    // Promise.all(matchedComponents.map(({ asyncData }) => asyncData && asyncData({
+    //   store,
+    //   route: router.currentRoute
+    // }))).then(() => {
+    //   isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`)
+    //   // After all preFetch hooks are resolved, our store is now
+    //   // filled with the state needed to render the app.
+    //   // Expose the state on the render context, and let the request handler
+    //   // inline the state in the HTML response. This allows the client-side
+    //   // store to pick-up the server-side state without having to duplicate
+    //   // the initial data fetching on the client.
+    //   context.state = store.state
+    //   resolve(app)
+    // }).catch(reject)
+    context.rendered = () => {
+      context.state = store.state
+    }
+
+    // no matched routes, reject with 404
+
+
+    // the Promise should resolve to the app instance so it can be rendered
+    return resolve(app)
+  }, reject)
+})

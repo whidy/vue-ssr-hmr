@@ -12,6 +12,9 @@ module.exports = {
     "airbnb-base",
     "plugin:vue/recommended"
   ],
+  "globals": {
+    "window": false,
+  },
   "rules": {
     "import/prefer-default-export": "off",
     "no-param-reassign": "off",

@@ -11,8 +11,8 @@ export function createRouter() {
   return new Router({
     mode: 'history',
     routes: [
-      { path: routes.pages.main, component: () => import('./client/components/Main.vue') },
-      { path: routes.pages.about, component: () => import('./client/components/About.vue') },
+      { path: routes.pages.main, component: () => import('./client/page/Main.vue') },
+      { path: routes.pages.about, component: () => import('./client/page/About.vue') },
     ],
   })
 }

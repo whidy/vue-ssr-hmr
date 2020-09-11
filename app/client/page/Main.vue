@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Shopping list</h1>
+    <h1>Shopping list!</h1>
     <div
       v-for="item in items"
       :key="item.id">
@@ -54,7 +54,7 @@ export default {
   },
 
   serverPrefetch() {
-    console.log('Run only on server')
+    console.log('Run only on server!')
   },
 
   methods: {
